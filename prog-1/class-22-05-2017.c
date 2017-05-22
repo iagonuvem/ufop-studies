@@ -14,7 +14,7 @@ int main()
 	// Print the readed value
 	printf("O numero x digitado e: %d\n", x);
 
-	// add +1 to the value
+	// add +1 to the value of x
 	x++;// x = x + 1;
 
 	printf("O numero x apos complemento e: %d\n", x);
@@ -22,6 +22,9 @@ int main()
 	y = x++; // y receive the value of 'x' and x was incremented
  
 	z = ++x; // z receive the value of 'x' plus 1
+
+	printf("O valor de y e: %d\n", y);
+	printf("O valor de z e: %d\n", z);
 
 	return 0;
 }
