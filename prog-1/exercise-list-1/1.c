@@ -16,7 +16,7 @@ int main()
 	scanf("%d" , &bas);
 
 	// Perímetro = soma dos lados , ou 2 vezes a base mais 2 vezes a altura
-	per = (2 * alt) + (2 * base);
+	per = (2 * alt) + (2 * bas);
 
 	// Área = base X Altura
 	area = bas * alt;
