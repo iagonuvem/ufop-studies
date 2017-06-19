@@ -4,18 +4,12 @@
 de um numero de acordo com a base e o expoente fornecidos*/
 
 int potencia(int base, int expoente){
-	int result , aux;
-	for(int i = 1; expoente > i; i++){
-		if(i == 1){
-			result = base * base;	
-		}
-		else{
-			result = aux * base;
-		}
-		aux = result;
+	int result = 1;
+	for(int i = 1; expoente >= i; i++){
+		result = result * base;
 	}
 
-	return aux;
+	return result;
 }
 int main(int argc, char const *argv[])
 {
