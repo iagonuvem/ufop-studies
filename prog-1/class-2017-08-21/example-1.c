@@ -10,6 +10,7 @@ typedef struct regAluno
 
 int main(int argc, char const *argv[])
 {
+	//Apelido da estrura nome que vai no contexto atual
 	Aluno alunos[5]; // 'Instancia' a estrutura
 
 	printf("Informe os dados dos alunos:\n");
