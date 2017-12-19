@@ -25,7 +25,7 @@ No* constroi(int n, int* v){
 			p->info = v[i];
 			p->prox = l;
 			if(i==0){
-				p->prox = NULL;
+				p->ant = NULL;
 			}
 			else{
 				l->ant = p;
@@ -37,32 +37,6 @@ No* constroi(int n, int* v){
 
 	return l;
 	
-}
-
-int* constroi_vetor(No* lista){
-	int cont = 0; // Contador para saber quantos nós tem a lista
-
-	No* p = (No*) malloc(sizeof(No));
-	for ( p = lista; p != NULL; p = p->prox) // Percorre a lista para contar os nós
-	{
-		cont++; 
-	}
-
-	if(cont > 0){ // Se a lista não for vazia(tiver mais de 0 elementos)
-		int* v = (int*) malloc(cont * sizeof(int)); // aloca o vetor de acordo com o numero de nós
-	
-		int i = 0;
-		p = lista;
-		while(p != NULL){
-			v[i] = p->info; 
-			p = p->prox;
-			i++;
-		}
-
-		return v; // retorna o vetor;
-	}
-	
-	return 0;
 }
 
 void imprime(No* l){
@@ -102,7 +76,8 @@ No* intersecao(No* lista1, No* lista2){
 			}
 		}
 	}
-
+	free(a);
+	free(b);
 	return p;
 }
 
@@ -111,26 +86,28 @@ int main()
 
 	int n = 5;
 	int *v = (int*) malloc(n * sizeof(int));
+	int *v2 = (int*) malloc(n * sizeof(int));
 
 	// preencher os vetores
 	for (int i = 0; i < n; ++i)
 	{
 		v[i] = i+1;
+		v2[i] = 2*i;
 	}
 	
 	No* lista1 = constroi(n,v);
+	No* lista2 = constroi(n,v2);
 
 	printf("Lista 1:\n");
 	imprime(lista1);
 
-	int* vet = constroi_vetor(lista1);
+	printf("Lista 2:\n");
+	imprime(lista2);
 
-	printf("Vetor da lista: [");
-	for (int i = 0; i < 5; ++i)
-	{
-		printf("%d ", vet[i]);
-	}
-	printf("]\n");
+	No* i = intersecao(lista1,lista2);
+
+	printf("Intersecao das listas:\n");
+	imprime(i);
 
 	return 0;
 }
