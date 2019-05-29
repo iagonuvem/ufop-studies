@@ -1,0 +1,199 @@
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx, url}
+
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+%\usepackage[brazil]{babel}   
+\usepackage[utf8]{inputenc} 
+
+     
+\sloppy
+
+\title{Exercício 1 - Algoritmos e Estruturas de Dados (CSI-488)}
+
+\author{Iago C. Nuvem\inst{2}}
+
+
+\address{Instituto de Ciências Exatas e Aplicadas(ICEA) -- UFOP\\
+ 91.501-970 -- João Monlevade -- MG -- Brazil
+\nextinstitute
+  Departamento de Computação e Sistemas\\
+  Universidade Federal de Ouro Preto -- João Monlevade, MG -- Brazil
+  \email{iago.nuvem@aluno.ufop.edu.br}
+}
+
+
+\begin{document} 
+
+\lstset{language=C}
+\maketitle
+
+\begin{resumo} 
+  Este meta-artigo tem por finalidade o estudo dos métodos de
+  ordenação simples (Bubble Sort, Insertion Sort e Selection Sort),
+  serão analisados os pontos positivos e negativos de cada algoritmo
+  além de sua complexidade de tempo e memória.
+  
+\end{resumo}
+
+
+\section{Insertion Sort}
+Este algoritmo é utilizado quando o número de elementos é pequeno ou quando tem-se de ordenar um vetor praticamente ordenado
+\subsection{Características}
+O algoritmo não utiliza estruturas de dados adicionais, isto é, é do tipo in-place, ele também garante que elementos repetidos sejam ordenados com base em sua posição no array, ou seja, é estável.
+\subsection{Implementação}
+    Conforme referência \cite{insertionSort}
+    \begin{lstlisting}
+    void insertionSort(int arr[], int n) 
+    { 
+        int i, key, j; 
+        for (i = 1; i < n; i++) { 
+            key = arr[i]; 
+            j = i - 1; 
+      
+            /* Move elements of arr[0..i-1], that are 
+              greater than key, to one position ahead 
+              of their current position */
+            while (j >= 0 && arr[j] > key) { 
+                arr[j + 1] = arr[j]; 
+                j = j - 1; 
+            } 
+            arr[j + 1] = key; 
+        } 
+    } 
+    \end{lstlisting}
+\subsection{Análise de Complexidade}
+Para o tempo de execução do algoritmo, podemos dividir em três casos principais \cite{insertionSortAnalysis}:
+    \begin{itemize}
+        \item  \textbf{Pior Caso}: Ocorre qundo o vetor está ordenado em ordem inversa à que se deseja ordenar, nesse caso para cada elemento do vetor, todos os elementos o subvetor deslocam-se para a direita, sabendo que o vetor tem tamanho n, seu tempo de execução no pior caso é dado por: O(n$^2$)
+        
+        \item  \textbf{Melhor Caso}: Oocorre quando o vetor que se deseja ordenar, já se encontra ordenado, nesse caso precisa-se percorrer completamente o vetor ao menos uma vez, sabendo que o vetor tem tamanho n, seu tempo de execução no melhor caso é dado por: O(n)
+        
+        \item  \textbf{Caso Médio}: Dado um vetor de tamanho n, quando o mesmo se encontra disposto de maneira totalmente aleatória, sabemos que a cada inserção cada elemento percorrerá no máximo n/2 elementos, então o tempo de execução será a metade do pior caso, entretanto, em análise assintótica desconsideramos os termos constantes e portanto o tempo de execução do algoritmo é o mesmo do pior caso: O(n$^2$)
+    \end{itemize}
+Conforme dito acima, o algoritmo não utiliza de estruturas de dados (tipo in-place) e portanto o seu custo de armazenamento em memória é dado por: O(1)
+
+\section{Selection Sort} \label{sec:firstpage}
+\subsection{Características}
+O algoritmo não utiliza espaços extras (estruturas de dados), isto é, ele é in-place, além disso nunca realiza mais do que O(n) trocas e é muito eficiente quando escrever na memória afeta consideravelmente o desempenho, devido ao baixo custo de acesso à memoria
+\subsection{Implementação}
+    Conforme referência \cite{selectionSort}
+    \begin{lstlisting}
+    void swap(int *xp, int *yp)  
+    {  
+        int temp = *xp;  
+        *xp = *yp;  
+        *yp = temp;  
+    }  
+    void selectionSort(int arr[], int n)  
+    {  
+        int i, j, min_idx;  
+      
+        // One by one move boundary of unsorted subarray  
+        for (i = 0; i < n-1; i++)  
+        {  
+            // Find the minimum element in unsorted array  
+            min_idx = i;  
+            for (j = i+1; j < n; j++)  
+            if (arr[j] < arr[min_idx])  
+                min_idx = j;  
+      
+            // Swap the found minimum element with the first element
+            swap(&arr[min_idx], &arr[i]);  
+        }  
+    }  
+    \end{lstlisting}
+\subsection{Análise de Complexidade}
+O tempo total de execução do selection sort tem três partes:\cite{selectionSortAnalysis}
+\begin{enumerate}
+    \item O tempo de execução para todas as chamadas de \textit{min\_idx}.
+    \item O tempo de execução para todas as chamadas de troca.
+    \item O tempo de execução para o resto do laço na função selectionSort.
+\end{enumerate}
+Para as partes 2 e 3 sabemos que há n chamadas tanto para as trocas quanto para o resto do laço na função, portanto temos um tempo de O(n) nesses dois itens. Para a parte 1 cada iteração do laço do \textit{min\_idx} leva um tempo constante e representa uma série aritmética dada por n$^2$/2 + n/2, logo o tempo total para todas as chamadas é uma constante vezes n$^2$/2 + n/2. Desconsiderando as constantes e os termos de menores ordens, temos então um tempo de O(n$^2$). \\
+Analisando as três etapas as quais separamos o algoritmo, a de maior relevância é a primeira com o custo de O(n$^2$), observe também que nenhum caso é particularmente bom ou particularmente ruim para a ordenação por seleção. O laço de \textit{min\_idx} sempre fará n$^2$/2 + n/2 iterações, independentemente da entrada. Portanto, podemos dizer que a ordenação por seleção executa no tempo $\Theta$(n$^2$) em todos os casos.\\
+Quanto ao seu custo de armazenamento em memória, conforme dito acima, o algoritmo não utiliza de estruturas de dados (tipo in-place) e portanto esse custo é dado por: O(1)
+
+\section{Bubble Sort}
+É um algoritmo de fácil entendimento e implementação, entretando não é recomendado para ordenações de vetores muito grandes dado seu tempo de execução com crescimento exponencial.\\
+Em computação gráfica é popular por sua capacidade de detectar um erro muito pequeno (como a troca de apenas dois elementos) em matrizes quase ordenadas e corrigi-lo com apenas complexidade linear (2n) \cite{bubbleSort}
+\subsection{Características}
+O algoritmo de ordenação por "bolha", é bem simples de ser implementado e é estável, entretanto para um conjunto massivo de dados o seu tempo de execução se torna uma problemática. O algoritmo não utiliza estruturas de dados adicionais, isto é, é do tipo in-place
+\subsection{Implementação}
+    Conforme referência \cite{bubbleSort}
+    \begin{lstlisting}
+    void swap(int *xp, int *yp)  
+    {  
+        int temp = *xp;  
+        *xp = *yp;  
+        *yp = temp;  
+    }  
+    
+    void bubbleSort(int arr[], int n) { 
+       int i, j; 
+       for (i = 0; i < n-1; i++)       
+      
+           // Last i elements are already in place    
+           for (j = 0; j < n-i-1; j++)  
+               if (arr[j] > arr[j+1]) 
+                  swap(&arr[j], &arr[j+1]); 
+    } 
+    \end{lstlisting}
+\subsection{Análise de Complexidade}
+    \begin{itemize}
+        \item Pior Caso: ocorre quando o vetor está inversamente ordenado, sendo necessário que para cada elemento se percorra todo o subvetor que não se encontra ordenado, tendo como custo computacional: O(n$^{2}$ )
+        \item Melhor Caso: ocorre quando o vetor está ordenado, portanto o algoritmo percorre-o ao menos uma vez e não realiza nenhuma troca, tendo por custo nesse caso: O(n)
+        \item Caso Médio: O(n$^2$)
+    \end{itemize}
+\subsection{Melhorias}
+O algoritmo apresentado acima ainda está passível de melhorias para obtenção de melhores tempo de processamento, principalmente no caso médio. O algoritmo só realiza trocas em casos onde existe algum elemento que não se encontra ordenado, portanto, ao adicionar uma verificação dessa troca, evita-se que percorra todo o vetor as n vezes em caso de um vetor praticamente ordenado por exemplo. Abaixo um exemplo de implementação com esse contador \cite{bubbleSort}:
+    \begin{lstlisting}
+    void bubbleSort(int arr[], int n) { 
+       int i, j; 
+       bool swapped; 
+       for (i = 0; i < n-1; i++) 
+       { 
+         swapped = false; 
+         for (j = 0; j < n-i-1; j++) 
+         { 
+            if (arr[j] > arr[j+1]) 
+            { 
+               swap(&arr[j], &arr[j+1]); 
+               swapped = true; 
+            } 
+         } 
+      
+         // IF no two elements were swapped by inner loop, then break
+         if (swapped == false) 
+            break; 
+       } 
+    } 
+    \end{lstlisting}
+\bibliographystyle{sbc}
+\bibliography{sbc-template}
+
+\end{document}
