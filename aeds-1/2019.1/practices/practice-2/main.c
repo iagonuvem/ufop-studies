@@ -102,7 +102,7 @@ int main(int argc, char* argv[]){
 		time = clock() - time;
 	}else if(strcmp(ALG, "qui") == 0){
 		time = clock();
-		quickSort(&A, &att, &comp);
+		quickSort(&A, 0, (A.n)-1, &att, &comp);
 		time = clock() - time;
 	}else if(strcmp(ALG, "heap") == 0){
 		time = clock();
