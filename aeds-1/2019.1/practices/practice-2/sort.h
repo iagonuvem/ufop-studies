@@ -12,4 +12,4 @@ void insertionSortO(TArray*,long*,long*);
 void shellSort(TArray*,long*,long*);
 void quickSort(TArray*,int,int,long*,long*);
 void heapSort(TArray*,long*,long*);
-void mergeSort(TArray*,long*,long*);
+void mergeSort(TArray*,int,int,long*,long*);

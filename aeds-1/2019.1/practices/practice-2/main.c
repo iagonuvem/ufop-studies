@@ -110,7 +110,7 @@ int main(int argc, char* argv[]){
 		time = clock() - time;
 	}else if(strcmp(ALG, "merge") == 0){
 		time = clock();
-		mergeSort(&A, &att, &comp);
+		mergeSort(&A, 0, (A.n)-1, &att, &comp);
 		time = clock() - time;
 	}else{
 		printf("ERRO: ALGORITMO DE ORDENACAO DESCONHECIDO\n");

@@ -228,6 +228,86 @@ void heapSort(TArray* pA,long* att,long* comp){
     } 
 }
 
-void mergeSort(TArray* pA,long* att,long* comp){
-	printf("METODO NAO IMPLEMENTADO\n");
+
+void merge(TArray* pA, int l, int m, int r, long* att, long* comp) 
+{ 
+    int i, j, k; 
+    (*att)+=2;
+    int n1 = m - l + 1; 
+    int n2 =  r - m; 
+  
+    /* create temp arrays */
+    int *L = (int*) malloc(n1*sizeof(int));
+    int *R = (int*)malloc(n2*sizeof(int));
+    // int L[n1], R[n2]; 
+  
+    /* Copy data to temp arrays L[] and R[] */
+    for (i = 0; i < n1; i++){
+    	(*comp)++;
+    	(*att)++;
+        L[i] = pA->item[l + i].key; 
+    }
+    	
+    for (j = 0; j < n2; j++){
+    	(*comp)++;
+    	(*att)++;
+        R[j] = pA->item[m + 1+ j].key;
+    }  
+    /* Merge the temp arrays back into arr[l..r]*/
+    i = 0; // Initial index of first subarray 
+    j = 0; // Initial index of second subarray 
+    k = l; // Initial index of merged subarray 
+    while (i < n1 && j < n2) 
+    { 
+    	(*comp)++;
+        if (L[i] <= R[j]) 
+        { 
+        	(*comp)++;
+    		(*att)+=2;
+            pA->item[k].key = L[i]; 
+            i++; 
+        } 
+        else
+        { 
+    		(*att)+=2;
+            pA->item[k].key = R[j]; 
+            j++; 
+        } 
+        (*att)++;
+        k++; 
+    } 
+  
+    /* Copy the remaining elements of L[], if there 
+       are any */
+    while (i < n1) { 
+    	(*comp)++;
+    	(*att)+=3;
+        pA->item[k].key = L[i]; 
+        i++; 
+        k++; 
+    } 
+  
+    /* Copy the remaining elements of R[], if there 
+       are any */
+    while (j < n2) { 
+    	(*comp)++;
+    	(*att)+=3;
+        pA->item[k].key = R[j]; 
+        j++; 
+        k++; 
+    } 
+} 
+
+void mergeSort(TArray* pA,int l, int r, long* att, long* comp){
+	if (l < r) { 
+        // Same as (l+r)/2, but avoids overflow for 
+        // large l and h 
+        int m = l+(r-l)/2; 
+  
+        // Sort first and second halves 
+        mergeSort(pA, l, m, att, comp); 
+        mergeSort(pA, m+1, r, att, comp); 
+  
+        merge(pA, l, m, r, att, comp); 
+    } 
 }
